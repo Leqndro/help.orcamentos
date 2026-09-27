@@ -1,0 +1,17 @@
+  itensPorCategoria.pintura = [
+      { id: 'massa-teto',    nome: 'Massa corrida teto', tipo: 'area',
+        campos: [{ id: 'comprimento', label: 'Comprimento (m)' }, { id: 'largura', label: 'Largura (m)' }] },
+      { id: 'massa-parede',  nome: 'Massa corrida parede', tipo: 'area',
+        campos: [{ id: 'comprimento', label: 'Comprimento (m)' }, { id: 'altura', label: 'Altura (m)' }] },
+      { id: 'pintura-teto',  nome: 'Pintura teto', tipo: 'area',
+        campos: [{ id: 'comprimento', label: 'Comprimento (m)' }, { id: 'largura', label: 'Largura (m)' }] },
+      { id: 'pintura-parede',nome: 'Pintura parede', tipo: 'area',
+        campos: [{ id: 'comprimento', label: 'Comprimento (m)' }, { id: 'altura', label: 'Altura (m)' }] },
+      { id: 'pintura-chao',   nome: 'Pintura chão', tipo: 'area',
+        campos: [{ id: 'largura', label: 'Largura (m)' }, { id: 'comprimento', label: 'Comprimento (m)' }] },
+      { id: 'portas',         nome: 'Portas',    unidade: 'un' },
+      { id: 'janelas',        nome: 'Janelas',   unidade: 'un' },
+      { id: 'ferragens',      nome: 'Ferragens', unidade: 'un' },
+      { id: 'outros-pintura', nome: 'Outros', unidade: 'un', personalizado: true },
+      { id: 'materiais',      nome: 'Materiais', tipo: 'lista-materiais' },
+  ];

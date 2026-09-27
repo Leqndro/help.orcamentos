@@ -1,9 +1,19 @@
-const CACHE_NAME = 'help-orcamentos-v5';
+const CACHE_NAME = 'help-orcamentos-v6';
 const ARQUIVOS_CACHE = [
   './index.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
+  './style.css',
+  './dados-categorias.js',
+  './dados-eletrica.js',
+  './dados-hidraulica.js',
+  './dados-drywall.js',
+  './dados-pintura.js',
+  './dados-alvenaria.js',
+  './logo-data.js',
+  './pdf.js',
+  './app.js',
 ];
 
 self.addEventListener('install', (event) => {
