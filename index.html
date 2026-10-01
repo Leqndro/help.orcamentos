@@ -29,7 +29,7 @@
         Novo Orçamento
       </button>
     </main>
-    <footer><span>Help Orçamentos © Manutenção Predial · v3.1</span></footer>
+    <footer><span>Help Orçamentos © Manutenção Predial · v3.4</span></footer>
   </section>
 
   <!-- ===== TELA 0B: DADOS DO CLIENTE ===== -->
@@ -166,7 +166,7 @@
     <header>
       <button class="voltar" onclick="voltarDaTelaMedidas()">‹</button>
       <div class="titulos">
-        <p class="eyebrow">DRY WALL</p>
+        <p class="eyebrow">GESSO</p>
         <h1 id="medidas-titulo">Item</h1>
         <p class="sub" id="medidas-subtitulo">Informe o valor e as medidas dos cômodos</p>
       </div>
@@ -245,8 +245,8 @@
     </main>
     <footer style="display:flex; flex-direction:column; gap:10px;">
       <button class="btn btn-primario btn-bloco" onclick="salvarOrcamentoAtual()">💾 Salvar orçamento</button>
-      <button class="btn btn-secundario btn-bloco" id="btn-pdf-drywall" style="display:none;" onclick="gerarPDFMateriaisDrywall()">🧱 PDF de materiais (Dry Wall)</button>
-      <button class="btn btn-secundario btn-bloco" id="btn-pdf-medidas-drywall" style="display:none;" onclick="gerarPDFMedidasDryWall()">📐 PDF de medidas (Dry Wall)</button>
+      <button class="btn btn-secundario btn-bloco" id="btn-pdf-drywall" style="display:none;" onclick="gerarPDFMateriaisDrywall()">🧱 PDF de materiais (Gesso)</button>
+      <button class="btn btn-secundario btn-bloco" id="btn-pdf-medidas-drywall" style="display:none;" onclick="gerarPDFMedidasDryWall()">📐 PDF de medidas (Gesso)</button>
       <button class="btn btn-secundario btn-bloco" onclick="irPara('tela-home')">Início</button>
     </footer>
   </section>
@@ -290,6 +290,7 @@
 <script src="dados-drywall.js"></script>
 <script src="dados-pintura.js"></script>
 <script src="dados-alvenaria.js"></script>
+<script src="dados-ar-condicionado.js"></script>
 <script src="logo-data.js"></script>
 <script src="pdf.js"></script>
 <script src="app.js"></script>

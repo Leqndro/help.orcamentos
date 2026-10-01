@@ -195,21 +195,101 @@
       return;
     }
     resumo.innerHTML = '';
+
+    // Agrupa por categoria+nome (mantendo a ordem de primeira aparição) para
+    // poder oferecer "editar valor de todos" quando o mesmo item se repete
+    // (ex.: Forro em vários cômodos).
+    const gruposOrdenados = [];
+    const indiceGrupo = {};
     orcamentoAtual.forEach((it, idx) => {
-      const linha = document.createElement('div');
-      linha.className = 'resumo-linha';
-      const unidadeTxt = it.unidade === 'm' ? 'm' : (it.unidade === 'm²' ? 'm²' : 'un');
-      const qtdTexto = it.unidade === '' ? '' : `${it.quantidade.toFixed(2)} ${unidadeTxt} · `;
-      linha.innerHTML = `
-        <span>[${it.categoria}] ${nomeExibicao(it)} — ${qtdTexto}R$ ${it.total.toFixed(2)}</span>
-        <button class="remover" onclick="removerItem(${idx})">✕</button>
-      `;
-      resumo.appendChild(linha);
+      const chave = it.categoria + '|' + it.nome;
+      if (!(chave in indiceGrupo)) {
+        indiceGrupo[chave] = gruposOrdenados.length;
+        gruposOrdenados.push({ categoria: it.categoria, nome: it.nome, entradas: [] });
+      }
+      gruposOrdenados[indiceGrupo[chave]].entradas.push(idx);
     });
+
+    gruposOrdenados.forEach((grupo, gIdx) => {
+      grupo.entradas.forEach(idx => {
+        const it = orcamentoAtual[idx];
+        const linha = document.createElement('div');
+        linha.className = 'resumo-linha';
+        const unidadeTxt = it.unidade === 'm' ? 'm' : (it.unidade === 'm²' ? 'm²' : 'un');
+        const qtdTexto = it.unidade === '' ? '' : `${it.quantidade.toFixed(2)} ${unidadeTxt} · `;
+        linha.innerHTML = `
+          <span>[${it.categoria}] ${nomeExibicao(it)} — ${qtdTexto}R$ ${it.total.toFixed(2)}</span>
+          <span style="display:flex; gap:2px; flex-shrink:0;">
+            <button class="editar" onclick="editarItemOrcamento(${idx})" title="Editar">✏️</button>
+            <button class="remover" onclick="removerItem(${idx})" title="Remover">✕</button>
+          </span>
+        `;
+        resumo.appendChild(linha);
+      });
+
+      if (grupo.entradas.length >= 2) {
+        const linhaGrupo = document.createElement('div');
+        linhaGrupo.className = 'resumo-linha';
+        linhaGrupo.innerHTML = `
+          <span style="color:var(--texto-suave); font-size:12px;">${grupo.entradas.length} itens de "${grupo.nome}"</span>
+          <button class="editar" onclick="editarValorGrupo(${gIdx})" title="Editar valor de todos de uma vez">✏️ valor de todos</button>
+        `;
+        resumo.appendChild(linhaGrupo);
+      }
+    });
+
+    // Guarda os grupos para a edição em lote (editarValorGrupo usa pelo índice do grupo)
+    window.__gruposResumoAtual = gruposOrdenados;
   }
 
   function removerItem(idx) {
     orcamentoAtual.splice(idx, 1);
+    renderizarResumo();
+  }
+
+  function editarItemOrcamento(idx) {
+    const it = orcamentoAtual[idx];
+    if (!it) return;
+
+    let novaQtd = it.quantidade;
+    if (it.unidade !== '' && !it.valorFixo) {
+      const r = prompt(`Quantidade atual (${it.unidade}): ${it.quantidade}\nNova quantidade:`, it.quantidade);
+      if (r === null) return;
+      const v = parseFloat(r.replace(',', '.'));
+      if (isNaN(v) || v <= 0) { alert('Quantidade inválida.'); return; }
+      novaQtd = v;
+    }
+
+    const labelValor = it.valorFixo ? 'Novo valor total (R$):' : 'Novo valor unitário (R$):';
+    const rv = prompt(labelValor, it.maoDeObraUnit.toFixed(2));
+    if (rv === null) return;
+    const novoValor = parseFloat(rv.replace(',', '.'));
+    if (isNaN(novoValor) || novoValor < 0) { alert('Valor inválido.'); return; }
+
+    it.quantidade = novaQtd;
+    it.maoDeObraUnit = novoValor;
+    it.total = it.valorFixo ? novoValor : (novaQtd * novoValor);
+
+    renderizarResumo();
+  }
+
+  function editarValorGrupo(indiceGrupo) {
+    const grupo = (window.__gruposResumoAtual || [])[indiceGrupo];
+    if (!grupo) return;
+    const itens = grupo.entradas.map(idx => orcamentoAtual[idx]);
+    if (itens.length === 0) return;
+
+    const valorAtual = itens[0].maoDeObraUnit;
+    const r = prompt(`Novo valor para os ${itens.length} itens de "${grupo.nome}":`, valorAtual.toFixed(2));
+    if (r === null) return;
+    const novoValor = parseFloat(r.replace(',', '.'));
+    if (isNaN(novoValor) || novoValor < 0) { alert('Valor inválido.'); return; }
+
+    itens.forEach(it => {
+      it.maoDeObraUnit = novoValor;
+      it.total = it.valorFixo ? novoValor : (it.quantidade * novoValor);
+    });
+
     renderizarResumo();
   }
 
@@ -691,7 +771,7 @@
 
     const materiaisDrywall = calcularMateriaisDrywall();
     document.getElementById('btn-pdf-drywall').style.display = materiaisDrywall.length > 0 ? 'block' : 'none';
-    document.getElementById('btn-pdf-medidas-drywall').style.display = orcamentoAtual.some(it => it.categoria === 'Dry Wall') ? 'block' : 'none';
+    document.getElementById('btn-pdf-medidas-drywall').style.display = orcamentoAtual.some(it => it.categoria === 'Gesso') ? 'block' : 'none';
     materiaisDrywall.forEach(bloco => {
       const box = document.createElement('div');
       box.className = 'resumo-box';

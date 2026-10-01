@@ -20,9 +20,9 @@
   }
 
   function gerarPDFMedidasDryWall() {
-    const itens = orcamentoAtual.filter(it => it.categoria === 'Dry Wall' && it._drywallRegistroId);
+    const itens = orcamentoAtual.filter(it => it.categoria === 'Gesso' && it._drywallRegistroId);
     if (itens.length === 0) {
-      alert('Adicione medidas de Dry Wall ao orçamento antes de gerar o PDF.');
+      alert('Adicione medidas de Gesso ao orçamento antes de gerar o PDF.');
       return;
     }
 
@@ -60,7 +60,7 @@
 
       doc.setFontSize(9);
       doc.setTextColor(...CINZA_TEXTO);
-      doc.text('MEDIDAS DRY WALL', margemEsq, y);
+      doc.text('MEDIDAS GESSO', margemEsq, y);
       doc.text('Emitido em: ' + dataEmissao, margemDir, y, { align: 'right' });
       doc.setTextColor(...PRETO);
       y += 12;
@@ -163,8 +163,8 @@
       if (navigator.canShare && navigator.canShare({ files: [arquivo] })) {
         navigator.share({
           files: [arquivo],
-          title: 'Medidas Dry Wall',
-          text: 'Segue o PDF de medidas do Dry Wall em anexo.',
+          title: 'Medidas Gesso',
+          text: 'Segue o PDF de medidas de Gesso em anexo.',
         }).catch(() => doc.save(nomeArquivo));
       } else {
         doc.save(nomeArquivo);
@@ -216,7 +216,7 @@
         String(hoje.getMonth() + 1).padStart(2, '0') + '/' + hoje.getFullYear();
       doc.setFontSize(9);
       doc.setTextColor(...CINZA_TEXTO);
-      doc.text('MATERIAIS DRY WALL', margemEsq, y);
+      doc.text('MATERIAIS GESSO', margemEsq, y);
       doc.text('Emitido em: ' + dataEmissao, margemDir, y, { align: 'right' });
       doc.setTextColor(...PRETO);
       y += 12;
@@ -289,8 +289,8 @@
       if (navigator.canShare && navigator.canShare({ files: [arquivo] })) {
         navigator.share({
           files: [arquivo],
-          title: 'Materiais Dry Wall',
-          text: 'Segue a lista de materiais de dry wall em anexo.',
+          title: 'Materiais Gesso',
+          text: 'Segue a lista de materiais de gesso em anexo.',
         }).catch(() => doc.save(nomeArquivo));
       } else {
         doc.save(nomeArquivo);

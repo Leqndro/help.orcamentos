@@ -1,4 +1,4 @@
-const CACHE_NAME = 'help-orcamentos-v6';
+const CACHE_NAME = 'help-orcamentos-v9';
 const ARQUIVOS_CACHE = [
   './index.html',
   './manifest.json',
@@ -11,6 +11,7 @@ const ARQUIVOS_CACHE = [
   './dados-drywall.js',
   './dados-pintura.js',
   './dados-alvenaria.js',
+  './dados-ar-condicionado.js',
   './logo-data.js',
   './pdf.js',
   './app.js',

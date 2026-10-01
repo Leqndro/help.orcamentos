@@ -48,7 +48,7 @@
   // Montante e Guia da parede são calculados pela geometria real (largura/altura de cada parede),
   // não por uma proporção genérica de m² — ver explicação no calcularMateriaisDrywall().
   function calcularMontanteEGuiaParede() {
-    const paredes = orcamentoAtual.filter(it => it.categoria === 'Dry Wall' && it.nome === 'Parede de dry wall');
+    const paredes = orcamentoAtual.filter(it => it.categoria === 'Gesso' && it.nome === 'Parede de dry wall');
     let totalLinearMontante = 0;
     let totalPerimetroGuia = 0;
 
@@ -76,7 +76,7 @@
   // Canaleta F530 do forro: barras a cada 60cm ao longo da largura, cada uma
   // percorrendo todo o comprimento do forro.
   function calcularCanaletaF530Forro() {
-    const forros = orcamentoAtual.filter(it => it.categoria === 'Dry Wall' && it.nome === 'Forro');
+    const forros = orcamentoAtual.filter(it => it.categoria === 'Gesso' && it.nome === 'Forro');
     let totalLinearCanaleta = 0;
 
     forros.forEach(f => {
@@ -93,10 +93,10 @@
 
   function calcularMateriaisDrywall() {
     const areaParede = orcamentoAtual
-      .filter(it => it.categoria === 'Dry Wall' && it.nome === 'Parede de dry wall')
+      .filter(it => it.categoria === 'Gesso' && it.nome === 'Parede de dry wall')
       .reduce((soma, it) => soma + it.quantidade, 0);
     const areaForro = orcamentoAtual
-      .filter(it => it.categoria === 'Dry Wall' && it.nome === 'Forro')
+      .filter(it => it.categoria === 'Gesso' && it.nome === 'Forro')
       .reduce((soma, it) => soma + it.quantidade, 0);
 
     const resultado = [];
